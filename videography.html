@@ -16,22 +16,15 @@
   <meta name="twitter:title" content="Videography — Ricky Dwi Abdul Azis" />
   <meta name="twitter:description"
     content="Videography projects by Ricky Dwi Abdul Azis, with covers, descriptions and external links." />
-  <!-- FAVICON PLACEHOLDER — replace href with your own icon -->
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%231F2937'/></svg>" />
+  <link rel="icon" href="src/img/Logo color.webp" type="image/webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* ============================================================
-   1. DESIGN TOKENS
-   ============================================================ */
     :root {
       --primary: #EBEBEB;
-      /* background (light) */
       --secondary: #1F2937;
-      /* text (light) */
       --bg: var(--primary);
       --fg: var(--secondary);
       --muted: rgba(31, 41, 55, .65);
@@ -50,9 +43,6 @@
       --shadow: 0 18px 40px rgba(0, 0, 0, .45);
     }
 
-    /* ============================================================
-   2. BASE
-   ============================================================ */
     *,
     *::before,
     *::after {
@@ -106,9 +96,6 @@
       border-radius: 4px
     }
 
-    /* ============================================================
-   3. LOADING SCREEN
-   ============================================================ */
     #loader {
       position: fixed;
       inset: 0;
@@ -145,9 +132,6 @@
       }
     }
 
-    /* ============================================================
-   4. CUSTOM CURSOR
-   ============================================================ */
     #cursor {
       position: fixed;
       top: 0;
@@ -181,9 +165,6 @@
       }
     }
 
-    /* ============================================================
-   5. GLOBAL NAVIGATION
-   ============================================================ */
     .topbar {
       position: fixed;
       top: 0;
@@ -293,9 +274,6 @@
       padding: 4px
     }
 
-    /* ============================================================
-   6. SECTION SHELL
-   ============================================================ */
     .section {
       position: relative;
       min-height: 100svh;
@@ -316,7 +294,6 @@
       transform: none
     }
 
-    /* ---- 6a. HOME ---- */
     #home {
       align-items: center;
       text-align: center;
@@ -372,7 +349,6 @@
       border-radius: 0 40px 0 40px
     }
 
-    /* ---- 6b. ABOUT ---- */
     #about {
       padding: 0;
       min-height: 100svh;
@@ -485,7 +461,6 @@
       margin-top: 6px
     }
 
-    /* ---- 6c. CATEGORY / PROJECT MARQUEES ---- */
     .cat-title {
       font-size: clamp(26px, 4vw, 44px);
       font-weight: 400;
@@ -535,6 +510,10 @@
       object-fit: cover
     }
 
+    .marquee-track.second-row .card img {
+      aspect-ratio: 16 / 9;
+    }
+
     .card:hover {
       transform: scale(1.05);
       box-shadow: var(--shadow)
@@ -544,7 +523,6 @@
       animation-play-state: paused
     }
 
-    /* ---- 6d. PROJECT DETAIL ---- */
     .detail {
       min-height: 100svh;
       justify-content: center;
@@ -562,7 +540,7 @@
 
     .detail-hero img {
       width: 100%;
-      aspect-ratio: 16/9;
+      aspect-ratio: auto;
       object-fit: cover;
       transition: transform .5s var(--ease)
     }
@@ -593,7 +571,6 @@
       width: max-content
     }
 
-    /* ---- 6e. CONTACT ---- */
     #contact {
       justify-content: center;
       gap: clamp(40px, 8vh, 90px)
@@ -631,7 +608,6 @@
       text-decoration: underline
     }
 
-    /* ---- 6f. FOOTER ---- */
     .site-footer {
       display: flex;
       justify-content: space-between;
@@ -650,9 +626,6 @@
       text-decoration: underline
     }
 
-    /* ============================================================
-   7. RESPONSIVE
-   ============================================================ */
     @media (max-width:900px) {
       .about-wrap {
         grid-template-columns: 1fr;
@@ -711,15 +684,12 @@
 </head>
 
 <body>
-  <!-- ===== LOADING SCREEN ===== -->
   <div id="loader" role="status" aria-label="Loading">
     <img src="src/img/Logo color.webp" alt="Site logo" />
   </div>
 
-  <!-- ===== CUSTOM CURSOR ===== -->
   <div id="cursor" aria-hidden="true"></div>
 
-  <!-- ===== GLOBAL NAVIGATION ===== -->
   <header class="topbar">
     <div>
       <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navPanel" aria-label="Open menu">
@@ -742,7 +712,6 @@
   </header>
 
   <main>
-    <!-- ===== VIDEOGRAPHY ===== -->
     <section class="section category" id="videography" data-label="Videography">
       <h1 class="cat-title reveal">Videography</h1>
       <p class="cat-lead reveal">Selected videography works. Hover a card to pause the row, click to jump to the
@@ -750,9 +719,11 @@
       <div class="marquee">
         <div class="marquee-track" data-speed="34"></div>
       </div>
+      <div class="marquee">
+        <div class="marquee-track second-row" data-speed="46" data-reverse></div>
+      </div>
     </section>
 
-    <!-- Project details for this category -->
     <div id="details"></div>
 
   </main>
@@ -763,14 +734,8 @@
   </footer>
 
   <script>
-    /* ============================================================
-       A1. LOADING SCREEN
-       ============================================================ */
     window.addEventListener('load', () => setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1200));
 
-    /* ============================================================
-       A2. THEME (shared across pages via localStorage)
-       ============================================================ */
     const root = document.documentElement;
     root.dataset.theme = localStorage.getItem('theme') || 'light';
     document.getElementById('themeBtn').addEventListener('click', () => {
@@ -778,9 +743,6 @@
       localStorage.setItem('theme', root.dataset.theme);
     });
 
-    /* ============================================================
-       A3. CUSTOM CURSOR (rAF smoothing)
-       ============================================================ */
     (() => {
       const dot = document.getElementById('cursor');
       let tx = 0, ty = 0, cx = 0, cy = 0, active = false;
@@ -796,9 +758,6 @@
       addEventListener('mouseout', e => { if (e.target.closest(CLICKABLE)) dot.classList.remove('grow'); });
     })();
 
-    /* ============================================================
-       A4. MENU PANEL
-       ============================================================ */
     (() => {
       const btn = document.getElementById('menuBtn'), panel = document.getElementById('navPanel');
       const toggle = v => { panel.classList.toggle('open', v); btn.setAttribute('aria-expanded', v); };
@@ -807,9 +766,6 @@
       document.addEventListener('keydown', e => { if (e.key === 'Escape') toggle(false); });
     })();
 
-    /* ============================================================
-       A5. SECTION LABEL + SCROLL REVEALS
-       ============================================================ */
     const label = document.getElementById('currentSection');
     const sectionObserver = new IntersectionObserver(entries => {
       entries.forEach(en => { if (en.isIntersecting && en.intersectionRatio > .5) label.textContent = en.target.dataset.label; });
@@ -823,31 +779,59 @@
     }
     initReveals();
 
-    /* ============================================================
-       A6. FOOTER YEAR
-       ============================================================ */
     document.getElementById('year').textContent = new Date().getFullYear();
 
     const PROJECTS = [
-      { id: "short-film", title: "Short Film Reel", url: "https://example.com/project-5" },
-      { id: "event-after", title: "Event Aftermovie", url: "https://example.com/project-6" }
+      { id: "Krisis-Literasi", title: "Krisis Literasi Short Film", url: "https://youtu.be/Bl0xjFRnepc?si=0un9yxlC-4eaM-Hf", cover: "src/img/videoimg/f1.webp", description: "Short film yang membahas pentingnya literasi melalui narasi yang kuat dan visual yang emosional." },
+      { id: "Dua-Nada", title: "Dua Nada Short Film", url: "https://youtu.be/_BlB7p0JdR4?si=90eoSLtGcl1JoWwE", cover: "src/img/videoimg/f2.webp", description: "Karya pendek yang mengeksplorasi hubungan dan perbedaan emosi melalui musik dan visual." },
+      { id: "Sejati", title: "Sejati Short Film", url: "https://youtu.be/VRcdXxBjiSg?si=d75eDraDxvzmOf4x", cover: "src/img/videoimg/f4.webp", description: "Cerita pendek yang menonjolkan nilai kejujuran, identitas, dan pencarian jati diri." },
+      { id: "Kembali-Pulang", title: "Kembali Pulang Short Film", url: "https://www.instagram.com/reel/DHQPOfATVWJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==", cover: "src/img/videoimg/f3.webp", description: "Sebuah short film bertema pulang, nostalgia, dan makna rumah dalam perjalanan hidup." },
+      { id: "Ucapan-Idul-Fitri", title: "Ucapan Idul Fitri Short Film", url: "https://www.instagram.com/reel/DH0lNl9vCGZ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==", cover: "src/img/videoimg/f5.webp", description: "Video pendek bertema Idul Fitri dengan nuansa hangat, penuh kebersamaan, dan refleksi." },
+      { id: "Pesantren-Ramadhan", title: "Pesantren Ramadhan", url: "https://www.instagram.com/reel/DHzlr3fyqCd/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==", cover: "src/img/videoimg/vid1.webp", description: "Dokumentasi kegiatan Ramadan di pesantren dengan fokus suasana, momen, dan nilai kebersamaan." },
+      { id: "Diesnatalis-Ke-16", title: "Diesnatalis Ke-16", url: "https://www.instagram.com/reel/DDyDLqWSh9i/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==", cover: "src/img/videoimg/vid2.webp", description: "Dokumentasi acara diesnatalis dengan ritme cepat dan nuansa perayaan yang hidup." },
+      { id: "Diesnatalis-Ke-17", title: "Diesnatalis Ke-17", url: "https://youtu.be/zbclvOdumms?si=s3llpg3xy0xSiR_U", cover: "src/img/videoimg/vid3.webp", description: "Video dokumentasi yang menampilkan momen penting dan semangat komunitas dalam perayaan besar." }, 
+      { id: "P5-Video-Documentattion", title: "P5 Video Documentation", url: "https://www.instagram.com/reel/C92B5PCvcuB/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==", cover: "src/img/videoimg/vid4.webp", description: "Dokumentasi proyek P5 dengan pendekatan visual yang informatif dan menarik." },
+      { id: "Persami-2024", title: "Persami 2024", url: "https://drive.google.com/file/d/1ThKc1ChRS-BCH_MGgs27Iyz3Q1pq9tg-/view?usp=sharing", cover: "src/img/videoimg/vid5.webp", description: "Dokumentasi kegiatan Persami dengan fokus pada suasana, interaksi, dan momen berkesan." },
+      { id: "Seaso-Video-Documentation", title: "Seaso Video Documentation", url: "https://drive.google.com/file/d/1emqKSmKrHWAjPq3KNLetIYe62FeSO8jf/view?usp=share_link", cover: "src/img/videoimg/vid6.webp", description: "Video dokumentasi acara yang menonjolkan detail aktivitas dan suasana bersama." },
+      { id: "Wedding-Documentation", title: "Wedding Documentation", url: "https://www.instagram.com/reel/C8MffItPDNq/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==", cover: "src/img/videoimg/vid7.webp", description: "Dokumentasi pernikahan dengan nuansa elegan, hangat, dan penuh momen berharga." },
+      { id: "Nonton-Bareng-Documentation", title: "Nonton Bareng Documentation", url: "https://drive.google.com/file/d/1ei7U4QM--ATFEPAxUhmEx5FbLU6Cw2ZO/view?usp=share_link", cover: "src/img/videoimg/vid8.webp", description: "Dokumentasi acara nonton bareng yang menampilkan suasana komunitas dan kebersamaan." },
+      { id: "English-Camp", title: "English Camp", url: "https://drive.google.com/file/d/1ei7U4QM--ATFEPAxUhmEx5FbLU6Cw2ZO/view?usp=share_link", cover: "src/img/videoimg/vid9.webp", description: "Dokumentasi kegiatan English Camp dengan fokus pada semangat belajar dan interaksi peserta." }
     ];
 
-    /* ============================================================
-       B. CATEGORY MARQUEE + PROJECT DETAILS (page-specific)
-       ============================================================ */
-    const LOREM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
-    const poster = (t, w, h) => `https://placehold.co/${w}x${h}/1F2937/EBEBEB?text=${encodeURIComponent(t)}`;
+    const MARQUEE_ROWS = [
+      [
+        PROJECTS[0],
+        PROJECTS[1],
+        PROJECTS[2],
+        PROJECTS[3],
+        PROJECTS[4]
+      ],
+      [
+        PROJECTS[5],
+        PROJECTS[6],
+        PROJECTS[7],
+        PROJECTS[8],
+        PROJECTS[9],
+        PROJECTS[10],
+        PROJECTS[11],
+        PROJECTS[12],
+        PROJECTS[13]
+      ]
+    ];
+
 
     (() => {
-      document.querySelectorAll('.marquee-track').forEach(track => {
+      document.querySelectorAll('.marquee-track').forEach((track, index) => {
+        const rowProjects = MARQUEE_ROWS[index] || PROJECTS;
         const frag = document.createDocumentFragment();
-        for (let rep = 0; rep < 3; rep++)PROJECTS.forEach(p => {
-          const a = document.createElement('a');
-          a.href = '#detail-' + p.id; a.className = 'card'; a.setAttribute('aria-label', p.title);
-          a.innerHTML = `<img loading="lazy" src="${poster(p.title, 400, 600)}" alt="${p.title} project cover" />`;
-          frag.appendChild(a);
-        });
+        for (let rep = 0; rep < 3; rep++) {
+          rowProjects.forEach(p => {
+            const a = document.createElement('a');
+            a.href = '#detail-' + p.id; a.className = 'card'; a.setAttribute('aria-label', p.title);
+            a.innerHTML = `<img loading="lazy" src="${p.cover || poster(p.title, 400, 600)}" alt="${p.title} project cover" />`;
+            frag.appendChild(a);
+          });
+        }
         track.appendChild(frag);
         const dur = (+track.dataset.speed || 40);
         track.animate(
@@ -864,10 +848,10 @@
       host.innerHTML = PROJECTS.map(p => `
     <section class="section detail" id="detail-${p.id}" data-label="${p.title}">
       <a class="detail-hero reveal" href="${p.url}" target="_blank" rel="noopener" aria-label="Open ${p.title} in a new tab">
-        <img loading="lazy" src="${poster(p.title, 1200, 675)}" alt="${p.title} preview" />
+        <img loading="lazy" src="${p.preview || p.cover || poster(p.title, 1200, 675)}" alt="${p.title} preview" />
       </a>
       <h2 class="reveal">${p.title}</h2>
-      <p class="reveal">${LOREM}</p>
+      <p class="reveal">${p.description || 'Deskripsi project belum ditambahkan.'}</p>
       <a class="ext reveal" href="${p.url}" target="_blank" rel="noopener">View external link →</a>
     </section>`).join('');
       initReveals();

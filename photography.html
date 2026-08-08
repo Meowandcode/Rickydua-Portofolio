@@ -16,22 +16,15 @@
   <meta name="twitter:title" content="Photography — Ricky Dwi Abdul Azis" />
   <meta name="twitter:description"
     content="Photography projects by Ricky Dwi Abdul Azis, with covers, descriptions and external links." />
-  <!-- FAVICON PLACEHOLDER — replace href with your own icon -->
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%231F2937'/></svg>" />
+  <link rel="icon" href="src/img/Logo color.webp" type="image/webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* ============================================================
-   1. DESIGN TOKENS
-   ============================================================ */
     :root {
       --primary: #EBEBEB;
-      /* background (light) */
       --secondary: #1F2937;
-      /* text (light) */
       --bg: var(--primary);
       --fg: var(--secondary);
       --muted: rgba(31, 41, 55, .65);
@@ -50,9 +43,6 @@
       --shadow: 0 18px 40px rgba(0, 0, 0, .45);
     }
 
-    /* ============================================================
-   2. BASE
-   ============================================================ */
     *,
     *::before,
     *::after {
@@ -106,9 +96,6 @@
       border-radius: 4px
     }
 
-    /* ============================================================
-   3. LOADING SCREEN
-   ============================================================ */
     #loader {
       position: fixed;
       inset: 0;
@@ -145,9 +132,6 @@
       }
     }
 
-    /* ============================================================
-   4. CUSTOM CURSOR
-   ============================================================ */
     #cursor {
       position: fixed;
       top: 0;
@@ -181,9 +165,6 @@
       }
     }
 
-    /* ============================================================
-   5. GLOBAL NAVIGATION
-   ============================================================ */
     .topbar {
       position: fixed;
       top: 0;
@@ -293,9 +274,6 @@
       padding: 4px
     }
 
-    /* ============================================================
-   6. SECTION SHELL
-   ============================================================ */
     .section {
       position: relative;
       min-height: 100svh;
@@ -316,7 +294,6 @@
       transform: none
     }
 
-    /* ---- 6a. HOME ---- */
     #home {
       align-items: center;
       text-align: center;
@@ -372,7 +349,6 @@
       border-radius: 0 40px 0 40px
     }
 
-    /* ---- 6b. ABOUT ---- */
     #about {
       padding: 0;
       min-height: 100svh;
@@ -485,7 +461,6 @@
       margin-top: 6px
     }
 
-    /* ---- 6c. CATEGORY / PROJECT MARQUEES ---- */
     .cat-title {
       font-size: clamp(26px, 4vw, 44px);
       font-weight: 400;
@@ -531,8 +506,28 @@
 
     .card img {
       width: 100%;
-      aspect-ratio: 2/3;
+      aspect-ratio: 3 / 4 ;
       object-fit: cover
+    }
+
+    .marquee-track.second-row .card img {
+      aspect-ratio: 4 / 2.6;
+    }
+
+    .marquee-track.third-row .card img {
+      aspect-ratio: 3 / 4;
+    }
+    .marquee-track.fourth-row .card img {
+      aspect-ratio: 16 / 9;
+    }
+    .marquee-track.fifth-row .card img {
+      aspect-ratio: 3 / 4;
+    }
+    .marquee-track.sixth-row .card img {
+      aspect-ratio: 16 / 9;
+    }
+    .marquee-track.seventh-row .card img {
+      aspect-ratio: 3 / 4;
     }
 
     .card:hover {
@@ -544,56 +539,6 @@
       animation-play-state: paused
     }
 
-    /* ---- 6d. PROJECT DETAIL ---- */
-    .detail {
-      min-height: 100svh;
-      justify-content: center;
-      gap: 22px
-    }
-
-    .detail-hero {
-      width: 100%;
-      max-width: 820px;
-      margin: 0 auto;
-      border-radius: 4px;
-      overflow: hidden;
-      box-shadow: var(--shadow)
-    }
-
-    .detail-hero img {
-      width: 100%;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-      transition: transform .5s var(--ease)
-    }
-
-    .detail-hero:hover img {
-      transform: scale(1.03)
-    }
-
-    .detail h2 {
-      font-size: clamp(28px, 4.4vw, 52px);
-      font-weight: 400;
-      letter-spacing: -.02em;
-      margin-top: 10px
-    }
-
-    .detail p {
-      max-width: 820px;
-      font-size: clamp(11px, 1.05vw, 13px);
-      font-weight: 300;
-      opacity: .7;
-      line-height: 1.85
-    }
-
-    .ext {
-      font-size: 12px;
-      text-decoration: underline;
-      opacity: .8;
-      width: max-content
-    }
-
-    /* ---- 6e. CONTACT ---- */
     #contact {
       justify-content: center;
       gap: clamp(40px, 8vh, 90px)
@@ -631,7 +576,6 @@
       text-decoration: underline
     }
 
-    /* ---- 6f. FOOTER ---- */
     .site-footer {
       display: flex;
       justify-content: space-between;
@@ -650,9 +594,6 @@
       text-decoration: underline
     }
 
-    /* ============================================================
-   7. RESPONSIVE
-   ============================================================ */
     @media (max-width:900px) {
       .about-wrap {
         grid-template-columns: 1fr;
@@ -711,15 +652,12 @@
 </head>
 
 <body>
-  <!-- ===== LOADING SCREEN ===== -->
   <div id="loader" role="status" aria-label="Loading">
     <img src="src/img/Logo color.webp" alt="Site logo" />
   </div>
 
-  <!-- ===== CUSTOM CURSOR ===== -->
   <div id="cursor" aria-hidden="true"></div>
 
-  <!-- ===== GLOBAL NAVIGATION ===== -->
   <header class="topbar">
     <div>
       <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navPanel" aria-label="Open menu">
@@ -742,18 +680,32 @@
   </header>
 
   <main>
-    <!-- ===== PHOTOGRAPHY ===== -->
     <section class="section category" id="photography" data-label="Photography">
       <h1 class="cat-title reveal">Photography</h1>
-      <p class="cat-lead reveal">Selected photography works. Hover a card to pause the row, click to jump to the
-        project.</p>
+      <p class="cat-lead reveal">A curated collection of photographs that capture moments, emotions, and stories through my lens.
+</p>
       <div class="marquee">
         <div class="marquee-track" data-speed="34"></div>
       </div>
+      <div class="marquee">
+        <div class="marquee-track second-row" data-speed="46" data-reverse></div>
+      </div>
+      <div class="marquee">
+        <div class="marquee-track third-row" data-speed="38"></div>
+      </div>
+      <div class="marquee">
+        <div class="marquee-track fourth-row" data-speed="34"></div>
+      </div>
+      <div class="marquee">
+        <div class="marquee-track fifth-row" data-speed="46" data-reverse></div>
+      </div>
+      <div class="marquee">
+        <div class="marquee-track sixth-row" data-speed="38"></div>
+      </div>
+      <div class="marquee">
+        <div class="marquee-track seventh-row" data-speed="34" data-reverse></div>
+      </div>
     </section>
-
-    <!-- Project details for this category -->
-    <div id="details"></div>
 
   </main>
 
@@ -763,14 +715,8 @@
   </footer>
 
   <script>
-    /* ============================================================
-       A1. LOADING SCREEN
-       ============================================================ */
     window.addEventListener('load', () => setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1200));
 
-    /* ============================================================
-       A2. THEME (shared across pages via localStorage)
-       ============================================================ */
     const root = document.documentElement;
     root.dataset.theme = localStorage.getItem('theme') || 'light';
     document.getElementById('themeBtn').addEventListener('click', () => {
@@ -778,9 +724,6 @@
       localStorage.setItem('theme', root.dataset.theme);
     });
 
-    /* ============================================================
-       A3. CUSTOM CURSOR (rAF smoothing)
-       ============================================================ */
     (() => {
       const dot = document.getElementById('cursor');
       let tx = 0, ty = 0, cx = 0, cy = 0, active = false;
@@ -796,9 +739,6 @@
       addEventListener('mouseout', e => { if (e.target.closest(CLICKABLE)) dot.classList.remove('grow'); });
     })();
 
-    /* ============================================================
-       A4. MENU PANEL
-       ============================================================ */
     (() => {
       const btn = document.getElementById('menuBtn'), panel = document.getElementById('navPanel');
       const toggle = v => { panel.classList.toggle('open', v); btn.setAttribute('aria-expanded', v); };
@@ -807,9 +747,6 @@
       document.addEventListener('keydown', e => { if (e.key === 'Escape') toggle(false); });
     })();
 
-    /* ============================================================
-       A5. SECTION LABEL + SCROLL REVEALS
-       ============================================================ */
     const label = document.getElementById('currentSection');
     const sectionObserver = new IntersectionObserver(entries => {
       entries.forEach(en => { if (en.isIntersecting && en.intersectionRatio > .5) label.textContent = en.target.dataset.label; });
@@ -823,31 +760,69 @@
     }
     initReveals();
 
-    /* ============================================================
-       A6. FOOTER YEAR
-       ============================================================ */
     document.getElementById('year').textContent = new Date().getFullYear();
 
     const PROJECTS = [
-      { id: "street-series", title: "Street Series", url: "https://example.com/project-7" },
-      { id: "portrait-series", title: "Portrait Series", url: "https://example.com/project-8" }
+      { id: "foto-1", title: "Foto 1", cover: "src/img/photoimg/foto1.webp" },
+      { id: "foto-2", title: "Foto 2", cover: "src/img/photoimg/foto2.webp" },
+      { id: "foto-3", title: "Foto 3", cover: "src/img/photoimg/foto3.webp" },
+      { id: "foto-4", title: "Foto 4", cover: "src/img/photoimg/foto4.webp" },
+      { id: "foto-5", title: "Foto 5", cover: "src/img/photoimg/foto5.webp" },
+      { id: "foto-6", title: "Foto 6", cover: "src/img/photoimg/foto6.webp" },
+      { id: "foto-7", title: "Foto 7", cover: "src/img/photoimg/foto7.webp" },
+      { id: "foto-8", title: "Foto 8", cover: "src/img/photoimg/foto8.webp" },
+      { id: "foto-9", title: "Foto 9", cover: "src/img/photoimg/foto9.webp" },
+      { id: "foto-10", title: "Foto 10", cover: "src/img/photoimg/foto10.webp" },
+      { id: "foto-11", title: "Foto 11", cover: "src/img/photoimg/foto11.webp" },
+      { id: "foto-12", title: "Foto 12", cover: "src/img/photoimg/foto12.webp" },
+      { id: "foto-13", title: "Foto 13", cover: "src/img/photoimg/foto13.webp" },
+      { id: "foto-14", title: "Foto 14", cover: "src/img/photoimg/foto14.webp" },
+      { id: "foto-15", title: "Foto 15", cover: "src/img/photoimg/foto15.webp" },
+      { id: "foto-16", title: "Foto 16", cover: "src/img/photoimg/foto16.webp" },
+      { id: "foto-17", title: "Foto 17", cover: "src/img/photoimg/foto17.webp" },
+      { id: "foto-18", title: "Foto 18", cover: "src/img/photoimg/foto18.webp" },
+      { id: "foto-19", title: "Foto 19", cover: "src/img/photoimg/foto19.webp" },
+      { id: "foto-20", title: "Foto 20", cover: "src/img/photoimg/foto20.webp" },
+      { id: "foto-21", title: "Foto 21", cover: "src/img/photoimg/foto21.webp" },
+      { id: "foto-22", title: "Foto 22", cover: "src/img/photoimg/foto22.webp" },
+      { id: "foto-23", title: "Foto 23", cover: "src/img/photoimg/foto23.webp" },
+      { id: "foto-24", title: "Foto 24", cover: "src/img/photoimg/foto24.webp" },
+      { id: "foto-25", title: "Foto 25", cover: "src/img/photoimg/foto25.webp" },
+      { id: "foto-26", title: "Foto 26", cover: "src/img/photoimg/foto26.webp" },
+      { id: "foto-27", title: "Foto 27", cover: "src/img/photoimg/foto27.webp" },
+      { id: "foto-28", title: "Foto 28", cover: "src/img/photoimg/foto28.webp" },
+      { id: "foto-29", title: "Foto 29", cover: "src/img/photoimg/foto29.webp" },
+      { id: "foto-30", title: "Foto 30", cover: "src/img/photoimg/foto30.webp" },
+      { id: "foto-31", title: "Foto 31", cover: "src/img/photoimg/foto31.webp" },
+      { id: "foto-32", title: "Foto 32", cover: "src/img/photoimg/foto32.webp" },
+      { id: "foto-33", title: "Foto 33", cover: "src/img/photoimg/foto33.webp" }
     ];
 
-    /* ============================================================
-       B. CATEGORY MARQUEE + PROJECT DETAILS (page-specific)
-       ============================================================ */
-    const LOREM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+    const MARQUEE_ROWS = [
+      [PROJECTS[0], PROJECTS[1], PROJECTS[2], PROJECTS[3], PROJECTS[4]],
+      [PROJECTS[5], PROJECTS[6], PROJECTS[7], PROJECTS[8], PROJECTS[9]],
+      [PROJECTS[10], PROJECTS[11], PROJECTS[12], PROJECTS[13], PROJECTS[14], PROJECTS[15] ],
+      [PROJECTS[16], PROJECTS[17], PROJECTS[18] ],
+      [PROJECTS[19], PROJECTS[20], PROJECTS[21], PROJECTS[22], PROJECTS[23]],
+      [PROJECTS[24], PROJECTS[25], PROJECTS[26], PROJECTS[27] ],
+      [PROJECTS[28], PROJECTS[29], PROJECTS[30], PROJECTS[31], PROJECTS[32]]
+    ];
+
     const poster = (t, w, h) => `https://placehold.co/${w}x${h}/1F2937/EBEBEB?text=${encodeURIComponent(t)}`;
 
     (() => {
-      document.querySelectorAll('.marquee-track').forEach(track => {
+      document.querySelectorAll('.marquee-track').forEach((track, index) => {
+        const rowProjects = MARQUEE_ROWS[index] || PROJECTS;
         const frag = document.createDocumentFragment();
-        for (let rep = 0; rep < 3; rep++)PROJECTS.forEach(p => {
-          const a = document.createElement('a');
-          a.href = '#detail-' + p.id; a.className = 'card'; a.setAttribute('aria-label', p.title);
-          a.innerHTML = `<img loading="lazy" src="${poster(p.title, 400, 600)}" alt="${p.title} project cover" />`;
-          frag.appendChild(a);
-        });
+        for (let rep = 0; rep < 3; rep++) {
+          rowProjects.forEach(p => {
+            const a = document.createElement('a');
+            a.className = 'card';
+            a.setAttribute('aria-label', p.title);
+            a.innerHTML = `<img loading="lazy" src="${p.cover || poster(p.title, 400, 600)}" alt="${p.title} project cover" />`;
+            frag.appendChild(a);
+          });
+        }
         track.appendChild(frag);
         const dur = (+track.dataset.speed || 40);
         track.animate(
@@ -857,20 +832,6 @@
           { duration: dur * 1000, iterations: Infinity, easing: 'linear' }
         );
       });
-    })();
-
-    (() => {
-      const host = document.getElementById('details');
-      host.innerHTML = PROJECTS.map(p => `
-    <section class="section detail" id="detail-${p.id}" data-label="${p.title}">
-      <a class="detail-hero reveal" href="${p.url}" target="_blank" rel="noopener" aria-label="Open ${p.title} in a new tab">
-        <img loading="lazy" src="${poster(p.title, 1200, 675)}" alt="${p.title} preview" />
-      </a>
-      <h2 class="reveal">${p.title}</h2>
-      <p class="reveal">${LOREM}</p>
-      <a class="ext reveal" href="${p.url}" target="_blank" rel="noopener">View external link →</a>
-    </section>`).join('');
-      initReveals();
     })();
 
   </script>

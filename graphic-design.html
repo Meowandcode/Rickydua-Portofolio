@@ -22,14 +22,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* ============================================================
-   1. DESIGN TOKENS
-   ============================================================ */
     :root {
       --primary: #EBEBEB;
-      /* background (light) */
       --secondary: #1F2937;
-      /* text (light) */
       --bg: var(--primary);
       --fg: var(--secondary);
       --muted: rgba(31, 41, 55, .65);
@@ -48,9 +43,6 @@
       --shadow: 0 18px 40px rgba(0, 0, 0, .45);
     }
 
-    /* ============================================================
-   2. BASE
-   ============================================================ */
     *,
     *::before,
     *::after {
@@ -104,9 +96,6 @@
       border-radius: 4px
     }
 
-    /* ============================================================
-   3. LOADING SCREEN
-   ============================================================ */
     #loader {
       position: fixed;
       inset: 0;
@@ -143,9 +132,6 @@
       }
     }
 
-    /* ============================================================
-   4. CUSTOM CURSOR
-   ============================================================ */
     #cursor {
       position: fixed;
       top: 0;
@@ -179,9 +165,6 @@
       }
     }
 
-    /* ============================================================
-   5. GLOBAL NAVIGATION
-   ============================================================ */
     .topbar {
       position: fixed;
       top: 0;
@@ -291,9 +274,6 @@
       padding: 4px
     }
 
-    /* ============================================================
-   6. SECTION SHELL
-   ============================================================ */
     .section {
       position: relative;
       min-height: 100svh;
@@ -314,7 +294,6 @@
       transform: none
     }
 
-    /* ---- 6a. HOME ---- */
     #home {
       align-items: center;
       text-align: center;
@@ -370,7 +349,6 @@
       border-radius: 0 40px 0 40px
     }
 
-    /* ---- 6b. ABOUT ---- */
     #about {
       padding: 0;
       min-height: 100svh;
@@ -483,7 +461,6 @@
       margin-top: 6px
     }
 
-    /* ---- 6c. CATEGORY / PROJECT MARQUEES ---- */
     .cat-title {
       font-size: clamp(26px, 4vw, 44px);
       font-weight: 400;
@@ -550,7 +527,6 @@
       animation-play-state: paused
     }
 
-    /* ---- 6e. CONTACT ---- */
     #contact {
       justify-content: center;
       gap: clamp(40px, 8vh, 90px)
@@ -588,7 +564,6 @@
       text-decoration: underline
     }
 
-    /* ---- 6f. FOOTER ---- */
     .site-footer {
       display: flex;
       justify-content: space-between;
@@ -607,9 +582,6 @@
       text-decoration: underline
     }
 
-    /* ============================================================
-   7. RESPONSIVE
-   ============================================================ */
     @media (max-width:900px) {
       .about-wrap {
         grid-template-columns: 1fr;
@@ -668,15 +640,12 @@
 </head>
 
 <body>
-  <!-- ===== LOADING SCREEN ===== -->
   <div id="loader" role="status" aria-label="Loading">
     <img src="src/img/Logo color.webp" alt="Site logo" />
   </div>
 
-  <!-- ===== CUSTOM CURSOR ===== -->
   <div id="cursor" aria-hidden="true"></div>
 
-  <!-- ===== GLOBAL NAVIGATION ===== -->
   <header class="topbar">
     <div>
       <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navPanel" aria-label="Open menu">
@@ -699,7 +668,6 @@
   </header>
 
   <main>
-    <!-- ===== GRAPHIC DESIGN ===== -->
     <section class="section category" id="graphic-design" data-label="Graphic Design">
       <h1 class="cat-title reveal">Graphic Design</h1>
       <p class="cat-lead reveal">Explore a curated selection of projects that showcase my creativity, problem solving,
@@ -722,14 +690,8 @@
   </footer>
 
   <script>
-    /* ============================================================
-       A1. LOADING SCREEN
-       ============================================================ */
     window.addEventListener('load', () => setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1200));
 
-    /* ============================================================
-       A2. THEME (shared across pages via localStorage)
-       ============================================================ */
     const root = document.documentElement;
     root.dataset.theme = localStorage.getItem('theme') || 'light';
     document.getElementById('themeBtn').addEventListener('click', () => {
@@ -737,9 +699,6 @@
       localStorage.setItem('theme', root.dataset.theme);
     });
 
-    /* ============================================================
-       A3. CUSTOM CURSOR (rAF smoothing)
-       ============================================================ */
     (() => {
       const dot = document.getElementById('cursor');
       let tx = 0, ty = 0, cx = 0, cy = 0, active = false;
@@ -755,9 +714,6 @@
       addEventListener('mouseout', e => { if (e.target.closest(CLICKABLE)) dot.classList.remove('grow'); });
     })();
 
-    /* ============================================================
-       A4. MENU PANEL
-       ============================================================ */
     (() => {
       const btn = document.getElementById('menuBtn'), panel = document.getElementById('navPanel');
       const toggle = v => { panel.classList.toggle('open', v); btn.setAttribute('aria-expanded', v); };
@@ -766,9 +722,6 @@
       document.addEventListener('keydown', e => { if (e.key === 'Escape') toggle(false); });
     })();
 
-    /* ============================================================
-       A5. SECTION LABEL + SCROLL REVEALS
-       ============================================================ */
     const label = document.getElementById('currentSection');
     const sectionObserver = new IntersectionObserver(entries => {
       entries.forEach(en => { if (en.isIntersecting && en.intersectionRatio > .5) label.textContent = en.target.dataset.label; });
@@ -828,9 +781,6 @@
       ]
     ];
 
-    /* ============================================================
-       B. CATEGORY MARQUEE + PROJECT DETAILS (page-specific)
-       ============================================================ */
     const LOREM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
     const poster = (t, w, h) => `https://placehold.co/${w}x${h}/1F2937/EBEBEB?text=${encodeURIComponent(t)}`;
 

@@ -16,22 +16,15 @@
   <meta name="twitter:title" content="Contact — Ricky Dwi Abdul Azis" />
   <meta name="twitter:description"
     content="Get in touch with Ricky Dwi Abdul Azis for graphic design, videography, photography and motion graphic work." />
-  <!-- FAVICON PLACEHOLDER — replace href with your own icon -->
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%231F2937'/></svg>" />
+  <link rel="icon" href="src/img/Logo color.webp" type="image/webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* ============================================================
-   1. DESIGN TOKENS
-   ============================================================ */
     :root {
       --primary: #EBEBEB;
-      /* background (light) */
       --secondary: #1F2937;
-      /* text (light) */
       --bg: var(--primary);
       --fg: var(--secondary);
       --muted: rgba(31, 41, 55, .65);
@@ -50,9 +43,6 @@
       --shadow: 0 18px 40px rgba(0, 0, 0, .45);
     }
 
-    /* ============================================================
-   2. BASE
-   ============================================================ */
     *,
     *::before,
     *::after {
@@ -106,9 +96,6 @@
       border-radius: 4px
     }
 
-    /* ============================================================
-   3. LOADING SCREEN
-   ============================================================ */
     #loader {
       position: fixed;
       inset: 0;
@@ -145,9 +132,6 @@
       }
     }
 
-    /* ============================================================
-   4. CUSTOM CURSOR
-   ============================================================ */
     #cursor {
       position: fixed;
       top: 0;
@@ -181,9 +165,6 @@
       }
     }
 
-    /* ============================================================
-   5. GLOBAL NAVIGATION
-   ============================================================ */
     .topbar {
       position: fixed;
       top: 0;
@@ -293,9 +274,6 @@
       padding: 4px
     }
 
-    /* ============================================================
-   6. SECTION SHELL
-   ============================================================ */
     .section {
       position: relative;
       min-height: 100svh;
@@ -316,7 +294,6 @@
       transform: none
     }
 
-    /* ---- 6a. HOME ---- */
     #home {
       align-items: center;
       text-align: center;
@@ -372,7 +349,6 @@
       border-radius: 0 40px 0 40px
     }
 
-    /* ---- 6b. ABOUT ---- */
     #about {
       padding: 0;
       min-height: 100svh;
@@ -485,7 +461,6 @@
       margin-top: 6px
     }
 
-    /* ---- 6c. CATEGORY / PROJECT MARQUEES ---- */
     .cat-title {
       font-size: clamp(26px, 4vw, 44px);
       font-weight: 400;
@@ -544,7 +519,6 @@
       animation-play-state: paused
     }
 
-    /* ---- 6d. PROJECT DETAIL ---- */
     .detail {
       min-height: 100svh;
       justify-content: center;
@@ -593,7 +567,6 @@
       width: max-content
     }
 
-    /* ---- 6e. CONTACT ---- */
     #contact {
       justify-content: center;
       gap: clamp(40px, 8vh, 90px)
@@ -631,7 +604,6 @@
       text-decoration: underline
     }
 
-    /* ---- 6f. FOOTER ---- */
     .site-footer {
       display: flex;
       justify-content: space-between;
@@ -650,9 +622,6 @@
       text-decoration: underline
     }
 
-    /* ============================================================
-   7. RESPONSIVE
-   ============================================================ */
     @media (max-width:900px) {
       .about-wrap {
         grid-template-columns: 1fr;
@@ -711,15 +680,12 @@
 </head>
 
 <body>
-  <!-- ===== LOADING SCREEN ===== -->
   <div id="loader" role="status" aria-label="Loading">
     <img src="src/img/Logo color.webp" alt="Site logo" />
   </div>
 
-  <!-- ===== CUSTOM CURSOR ===== -->
   <div id="cursor" aria-hidden="true"></div>
 
-  <!-- ===== GLOBAL NAVIGATION ===== -->
   <header class="topbar">
     <div>
       <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navPanel" aria-label="Open menu">
@@ -751,16 +717,13 @@
         </div>
         <div>
           <h3>Phone number</h3>
-          <!-- PLACEHOLDER — replace number -->
-          <a href="https://wa.me/6281234567890" target="_blank" rel="noopener">0812 3456 7890</a>
+          <a href="https://wa.me/6282322678779" target="_blank" rel="noopener">0823 2267 8779</a>
           <h3 style="margin-top:26px">Email</h3>
-          <a href="mailto:hello@example.com">hello@example.com</a>
+          <a href="mailto:rickyduaproduction@gmail.com">rickyduaproduction@gmail.com</a>
         </div>
         <div>
           <h3>Instagram</h3>
-          <a href="https://instagram.com/yourusername" target="_blank" rel="noopener">@yourusername</a>
-          <h3 style="margin-top:26px">Behance</h3>
-          <a href="https://behance.net/yourusername" target="_blank" rel="noopener">/yourusername</a>
+          <a href="https://instagram.com/ricky_dua_" target="_blank" rel="noopener">@ricky_dua_</a>
         </div>
       </div>
     </section>
@@ -773,14 +736,8 @@
   </footer>
 
   <script>
-    /* ============================================================
-       A1. LOADING SCREEN
-       ============================================================ */
     window.addEventListener('load', () => setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1200));
 
-    /* ============================================================
-       A2. THEME (shared across pages via localStorage)
-       ============================================================ */
     const root = document.documentElement;
     root.dataset.theme = localStorage.getItem('theme') || 'light';
     document.getElementById('themeBtn').addEventListener('click', () => {
@@ -788,9 +745,6 @@
       localStorage.setItem('theme', root.dataset.theme);
     });
 
-    /* ============================================================
-       A3. CUSTOM CURSOR (rAF smoothing)
-       ============================================================ */
     (() => {
       const dot = document.getElementById('cursor');
       let tx = 0, ty = 0, cx = 0, cy = 0, active = false;
@@ -806,9 +760,6 @@
       addEventListener('mouseout', e => { if (e.target.closest(CLICKABLE)) dot.classList.remove('grow'); });
     })();
 
-    /* ============================================================
-       A4. MENU PANEL
-       ============================================================ */
     (() => {
       const btn = document.getElementById('menuBtn'), panel = document.getElementById('navPanel');
       const toggle = v => { panel.classList.toggle('open', v); btn.setAttribute('aria-expanded', v); };
@@ -817,9 +768,6 @@
       document.addEventListener('keydown', e => { if (e.key === 'Escape') toggle(false); });
     })();
 
-    /* ============================================================
-       A5. SECTION LABEL + SCROLL REVEALS
-       ============================================================ */
     const label = document.getElementById('currentSection');
     const sectionObserver = new IntersectionObserver(entries => {
       entries.forEach(en => { if (en.isIntersecting && en.intersectionRatio > .5) label.textContent = en.target.dataset.label; });
@@ -833,9 +781,6 @@
     }
     initReveals();
 
-    /* ============================================================
-       A6. FOOTER YEAR
-       ============================================================ */
     document.getElementById('year').textContent = new Date().getFullYear();
 
   </script>
