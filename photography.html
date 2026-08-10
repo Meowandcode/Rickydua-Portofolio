@@ -810,19 +810,35 @@
 
     const poster = (t, w, h) => `https://placehold.co/${w}x${h}/1F2937/EBEBEB?text=${encodeURIComponent(t)}`;
 
+    const makeCard = (project, priority = false) => {
+      const a = document.createElement('a');
+      a.className = 'card';
+      a.setAttribute('aria-label', project.title);
+
+      const img = document.createElement('img');
+      img.src = project.cover || poster(project.title, 400, 600);
+      img.alt = `${project.title} project cover`;
+      img.loading = priority ? 'eager' : 'lazy';
+      img.decoding = 'async';
+      img.fetchPriority = priority ? 'high' : 'low';
+      img.width = 400;
+      img.height = 600;
+      a.appendChild(img);
+      return a;
+    };
+
     (() => {
       document.querySelectorAll('.marquee-track').forEach((track, index) => {
         const rowProjects = MARQUEE_ROWS[index] || PROJECTS;
         const frag = document.createDocumentFragment();
-        for (let rep = 0; rep < 3; rep++) {
-          rowProjects.forEach(p => {
-            const a = document.createElement('a');
-            a.className = 'card';
-            a.setAttribute('aria-label', p.title);
-            a.innerHTML = `<img loading="lazy" src="${p.cover || poster(p.title, 400, 600)}" alt="${p.title} project cover" />`;
-            frag.appendChild(a);
+
+        const isFirstRow = index === 0;
+        for (let rep = 0; rep < 2; rep++) {
+          rowProjects.forEach((p, pIndex) => {
+            frag.appendChild(makeCard(p, isFirstRow && rep === 0 && pIndex < rowProjects.length));
           });
         }
+
         track.appendChild(frag);
         const dur = (+track.dataset.speed || 40);
         track.animate(
