@@ -390,6 +390,16 @@
       object-fit: cover
     }
 
+    .portrait-fallback {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1px;
+      height: 1px;
+      visibility: hidden;
+      pointer-events: none
+    }
+
     .about-text {
       position: relative;
       padding: 0 var(--pad);
@@ -692,13 +702,13 @@
         <span></span><span></span><span></span>
       </button>
       <nav class="nav-panel" id="navPanel" aria-label="Main">
-        <a href="index.html" class="active" aria-current="page">Home</a>
-        <a href="about.html">About</a>
+        <a href="#home" class="active" aria-current="location">Home</a>
+        <a href="#about">About</a>
         <a href="graphic-design.html">Graphic Design</a>
         <a href="videography.html">Videography</a>
         <a href="photography.html">Photography</a>
         <a href="motion-graphic.html">Motion Graphic</a>
-        <a href="contact.html">Contact</a>
+        <a href="#contact">Contact</a>
       </nav>
     </div>
     <div class="topbar-right">
@@ -720,11 +730,67 @@
       </h1>
     </section>
 
+    <section class="section" id="about" data-label="About">
+      <div class="about-wrap">
+        <div class="portrait-side">
+          <div class="portrait-blob"></div>
+          <canvas id="portraitCanvas" aria-label="Portrait of Ricky Dwi Abdul Azis" role="img"></canvas>
+          <img id="portraitSrc" class="portrait-fallback" src="src/img/fotoku.webp" alt="" aria-hidden="true"
+            loading="eager" />
+        </div>
+        <div class="about-text">
+          <span class="anim hi">Yo!, I'm</span>
+          <h1 class="anim name">Ricky Dua</h1>
+          <span class="anim fullname">Ricky Dwi Abdul Azis</span>
+          <div class="mark" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about-detail" id="about-details" data-label="About">
+      <h2 class="reveal">What I do</h2>
+      <div class="about-grid">
+        <div class="reveal">
+          <h3>Focus</h3>
+          <p>Graphic design, videography, photography and motion graphic. from concept and art direction to the final
+            delivered asset.</p>
+        </div>
+        <div class="reveal">
+          <h3>Tools</h3>
+          <p>Adobe Photoshop, Illustrator, Lightroom, Affinity, Davinci Resolve.</p>
+        </div>
+        <div class="reveal">
+          <h3>Approach</h3>
+          <p>Clean layouts, strong typography and a consistent visual rhythm across every deliverable.</p>
+        </div>
+      </div>
+      <a class="ext reveal" href="#contact">Work with me →</a>
+    </section>
+
+    <section class="section" id="contact" data-label="Contact">
+      <h1 class="reveal">Let's Bring your ideas to life</h1>
+      <div class="contact-grid reveal">
+        <div>
+          <h3>Contact us</h3>
+        </div>
+        <div>
+          <h3>Phone number</h3>
+          <a href="https://wa.me/6282322678779" target="_blank" rel="noopener">0823 2267 8779</a>
+          <h3 style="margin-top:26px">Email</h3>
+          <a href="mailto:rickyduaproduction@gmail.com">rickyduaproduction@gmail.com</a>
+        </div>
+        <div>
+          <h3>Instagram</h3>
+          <a href="https://instagram.com/ricky_dua_" target="_blank" rel="noopener">@ricky_dua_</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-footer">
     <span>© <span id="year"></span> Ricky Dwi Abdul Azis</span>
-    <a href="contact.html">Get in touch →</a>
+    <a href="#contact">Get in touch →</a>
   </footer>
 
   <script>
@@ -762,7 +828,17 @@
 
     const label = document.getElementById('currentSection');
     const sectionObserver = new IntersectionObserver(entries => {
-      entries.forEach(en => { if (en.isIntersecting && en.intersectionRatio > .5) label.textContent = en.target.dataset.label; });
+      entries.forEach(en => {
+        if (!en.isIntersecting || en.intersectionRatio <= .5) return;
+        label.textContent = en.target.dataset.label;
+        const activeLink = document.querySelector(`#navPanel a[href="#${en.target.id === 'about-details' ? 'about' : en.target.id}"]`);
+        document.querySelectorAll('#navPanel a[href^="#"]').forEach(link => {
+          const isActive = link === activeLink;
+          link.classList.toggle('active', isActive);
+          if (isActive) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
+      });
     }, { threshold: [.5, .75] });
     const revealObserver = new IntersectionObserver(es => es.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('in'); revealObserver.unobserve(e.target); }
@@ -784,6 +860,62 @@
         requestAnimationFrame(loop);
       };
       requestAnimationFrame(loop);
+    })();
+
+    (() => {
+      const items = [...document.querySelectorAll('.about-text .anim')];
+      setInterval(() => {
+        items.forEach((el, i) => setTimeout(() => {
+          el.style.transition = 'transform .55s ease-in-out,opacity .55s ease-in-out';
+          el.style.transform = 'translateX(60px)'; el.style.opacity = '0';
+          setTimeout(() => {
+            el.style.transition = 'none'; el.style.transform = 'translateX(-60px)';
+            requestAnimationFrame(() => {
+              el.style.transition = 'transform .55s ease-in-out,opacity .55s ease-in-out';
+              el.style.transform = 'translateX(0)'; el.style.opacity = '1';
+            });
+          }, 560);
+        }, i * 90));
+      }, 3000);
+    })();
+
+    (() => {
+      const canvas = document.getElementById('portraitCanvas'), img = document.getElementById('portraitSrc');
+      const ctx = canvas.getContext('2d');
+      let ready = false, mx = -999, my = -999, raf = null;
+      const RADIUS = 110, BLOCK = 14;
+
+      if (!ctx) { return; }
+
+      const fit = () => { const r = canvas.getBoundingClientRect(); canvas.width = Math.max(1, Math.round(r.width)); canvas.height = Math.max(1, Math.round(r.height)); };
+      const contain = () => {
+        const s = Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
+        const w = img.naturalWidth * s, h = img.naturalHeight * s;
+        ctx.drawImage(img, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h);
+      };
+      const draw = () => {
+        raf = null; if (!ready) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height); contain();
+        if (mx < -500 || my < -500) return;
+        ctx.save(); ctx.beginPath(); ctx.arc(mx, my, RADIUS, 0, Math.PI * 2); ctx.clip();
+        ctx.imageSmoothingEnabled = false;
+        const x = Math.max(0, mx - RADIUS), y = Math.max(0, my - RADIUS), s = RADIUS * 2;
+        const tmp = document.createElement('canvas');
+        tmp.width = Math.max(1, Math.round(s / BLOCK)); tmp.height = tmp.width;
+        const t = tmp.getContext('2d');
+        if (!t) return;
+        t.imageSmoothingEnabled = false;
+        t.drawImage(canvas, x, y, s, s, 0, 0, tmp.width, tmp.height);
+        ctx.drawImage(tmp, 0, 0, tmp.width, tmp.height, x, y, s, s);
+        ctx.restore();
+      };
+      const schedule = () => { if (!raf) raf = requestAnimationFrame(draw); };
+      img.addEventListener('load', () => { ready = true; fit(); schedule(); });
+      img.addEventListener('error', () => { canvas.style.opacity = '0'; });
+      if (img.complete && img.naturalWidth) { ready = true; fit(); schedule(); }
+      addEventListener('resize', () => { fit(); schedule(); });
+      canvas.addEventListener('mousemove', e => { const r = canvas.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; schedule(); });
+      canvas.addEventListener('mouseleave', () => { mx = my = -999; schedule(); });
     })();
 
   </script>
