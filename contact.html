@@ -54,6 +54,30 @@
       scroll-behavior: smooth
     }
 
+    html.theme-revealing body {
+      transition: none
+    }
+
+    ::view-transition-group(root),
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation: none
+    }
+
+    ::view-transition-new(root) {
+      animation: theme-reveal .7s var(--ease) both
+    }
+
+    @keyframes theme-reveal {
+      from {
+        clip-path: circle(0 at var(--transition-x) var(--transition-y))
+      }
+
+      to {
+        clip-path: circle(var(--transition-radius) at var(--transition-x) var(--transition-y))
+      }
+    }
+
     body {
       margin: 0;
       background: var(--bg);
@@ -194,8 +218,7 @@
       display: block;
       width: 22px;
       height: 2px;
-      background: #fff;
-      mix-blend-mode: difference;
+      background: var(--fg);
       transition: transform .3s var(--ease), opacity .3s
     }
 
@@ -221,6 +244,7 @@
       border: 1px solid var(--edge);
       border-radius: 12px;
       background: var(--bg);
+      color: var(--fg);
       box-shadow: var(--shadow);
       opacity: 0;
       visibility: hidden;
@@ -235,6 +259,7 @@
     }
 
     .nav-panel a {
+      color: var(--fg);
       font-size: 15px;
       padding: 5px 0;
       opacity: .8;
@@ -273,6 +298,19 @@
       font-size: 16px;
       line-height: 1;
       padding: 4px
+    }
+
+    .theme-transition {
+      position: fixed;
+      inset: 0;
+      z-index: 10001;
+      pointer-events: none;
+      clip-path: circle(0 at var(--transition-x) var(--transition-y));
+      transition: clip-path .7s var(--ease);
+    }
+
+    .theme-transition.is-visible {
+      clip-path: circle(var(--transition-radius) at var(--transition-x) var(--transition-y));
     }
 
     .section {
@@ -741,9 +779,61 @@
 
     const root = document.documentElement;
     root.dataset.theme = localStorage.getItem('theme') || 'light';
-    document.getElementById('themeBtn').addEventListener('click', () => {
-      root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-      localStorage.setItem('theme', root.dataset.theme);
+    const themeBtn = document.getElementById('themeBtn');
+    let themeTransitionInProgress = false;
+    themeBtn.addEventListener('click', event => {
+      if (themeTransitionInProgress) return;
+
+      const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        root.dataset.theme = nextTheme;
+        localStorage.setItem('theme', nextTheme);
+        return;
+      }
+
+      const bounds = themeBtn.getBoundingClientRect();
+      const x = event.detail === 0 ? bounds.left + bounds.width / 2 : event.clientX;
+      const y = event.detail === 0 ? bounds.top + bounds.height / 2 : event.clientY;
+      const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      if (document.startViewTransition) {
+        themeTransitionInProgress = true;
+        root.classList.add('theme-revealing');
+        root.style.setProperty('--transition-x', `${x}px`);
+        root.style.setProperty('--transition-y', `${y}px`);
+        root.style.setProperty('--transition-radius', `${radius}px`);
+        const transition = document.startViewTransition(() => {
+          root.dataset.theme = nextTheme;
+          localStorage.setItem('theme', nextTheme);
+        });
+        const finishTransition = () => {
+          root.classList.remove('theme-revealing');
+          root.style.removeProperty('--transition-x');
+          root.style.removeProperty('--transition-y');
+          root.style.removeProperty('--transition-radius');
+          themeTransitionInProgress = false;
+        };
+        transition.finished.then(finishTransition, finishTransition);
+        return;
+      }
+
+      const transition = document.createElement('div');
+      transition.className = 'theme-transition';
+      transition.style.backgroundColor = nextTheme === 'dark' ? '#1F2937' : '#EBEBEB';
+      transition.style.setProperty('--transition-x', `${x}px`);
+      transition.style.setProperty('--transition-y', `${y}px`);
+      transition.style.setProperty('--transition-radius', `${radius}px`);
+      document.body.append(transition);
+      themeTransitionInProgress = true;
+
+      transition.addEventListener('transitionend', event => {
+        if (event.propertyName !== 'clip-path') return;
+        root.dataset.theme = nextTheme;
+        localStorage.setItem('theme', nextTheme);
+        transition.remove();
+        themeTransitionInProgress = false;
+      });
+      transition.getBoundingClientRect();
+      requestAnimationFrame(() => transition.classList.add('is-visible'));
     });
 
     (() => {
